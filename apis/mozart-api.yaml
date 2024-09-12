@@ -8,7 +8,7 @@ info:
     Además, incluye funcionalidades para validar tipos MIME y enviar datos a Prezzta.
   version: 1.0.0
 servers:
-  - url: https://dev.api.mozarth.com
+  - url: https://api.dev.mozarth.com
     description: Servidor de desarrollo
   - url: https://api.mozarth.com
     description: Servidor de producción

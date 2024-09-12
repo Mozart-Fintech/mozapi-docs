@@ -11,7 +11,7 @@ export default function Api() {
       <BrowserOnly>
         {() => (
           <Suspense fallback={Fallback}>
-            <LazyStoplight apiDescriptionUrl="https://raw.githubusercontent.com/Mozart-Fintech/mozart-docs/main/apis/mozart-api.yaml" />
+            <LazyStoplight apiDescriptionUrl="https://raw.githubusercontent.com/Mozart-Fintech/mozapi-docs/main/apis/mozart-api.yaml" />
           </Suspense>
         )}
       </BrowserOnly>

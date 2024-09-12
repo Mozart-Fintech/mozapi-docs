@@ -1,0 +1,2890 @@
+openapi: 3.0.0
+info:
+  title: MozAPI
+  description: >
+    MozAPI es una API robusta y versátil diseñada para gestionar diversas entidades dentro del ecosistema de Mozart. 
+    Proporciona endpoints para la creación, lectura, actualización y eliminación de instituciones financieras, 
+    historiales de cambios, contactos de leads, puntajes de leads, notas de leads, campañas, usuarios, préstamos y leads. 
+    Además, incluye funcionalidades para validar tipos MIME y enviar datos a Prezzta.
+  version: 1.0.0
+servers:
+  - url: https://dev.api.mozarth.com
+    description: Servidor de desarrollo
+  - url: https://api.mozarth.com
+    description: Servidor de producción
+
+components:
+  responses:
+    SuccessResponse:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                type: object
+                nullable: true
+    CreatedResponse:
+      description: Recurso creado con éxito
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Recurso creado con éxito
+              data:
+                type: object
+                nullable: true
+    SuccessResponseFinancialInstitutions:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                $ref: '#/components/schemas/FinancialInstitution'
+    CreatedResponseFinancialInstitutions:
+      description: Recurso creado con éxito
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Recurso creado con éxito
+              data:
+                $ref: '#/components/schemas/FinancialInstitution'
+    SuccessResponseChangesHistory:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                $ref: '#/components/schemas/ChangesHistory'
+    CreatedResponseChangesHistory:
+      description: Recurso creado con éxito
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Recurso creado con éxito
+              data:
+                $ref: '#/components/schemas/ChangesHistory'
+    SuccessResponseLeadContacts:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                $ref: '#/components/schemas/LeadContact'
+    CreatedResponseLeadContacts:
+      description: Recurso creado con éxito
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Recurso creado con éxito
+              data:
+                $ref: '#/components/schemas/LeadContact'
+    SuccessResponseLeadScores:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                $ref: '#/components/schemas/LeadScore'
+    CreatedResponseLeadScores:
+      description: Recurso creado con éxito
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Recurso creado con éxito
+              data:
+                $ref: '#/components/schemas/LeadScore'
+    SuccessResponseLeadNotes:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                $ref: '#/components/schemas/LeadNote'
+    CreatedResponseLeadNotes:
+      description: Recurso creado con éxito
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Recurso creado con éxito
+              data:
+                $ref: '#/components/schemas/LeadNote'
+    SuccessResponseCampaigns:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                $ref: '#/components/schemas/Campaign'
+    CreatedResponseCampaigns:
+      description: Recurso creado con éxito
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Recurso creado con éxito
+              data:
+                $ref: '#/components/schemas/Campaign'
+    SuccessResponseUsers:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                $ref: '#/components/schemas/User'
+    CreatedResponseUsers:
+      description: Recurso creado con éxito
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Recurso creado con éxito
+              data:
+                $ref: '#/components/schemas/User'
+    SuccessResponseLoans:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                $ref: '#/components/schemas/Loan'
+    CreatedResponseLoans:
+      description: Recurso creado con éxito
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Recurso creado con éxito
+              data:
+                $ref: '#/components/schemas/Loan'
+    SuccessResponseLeads:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                $ref: '#/components/schemas/Lead'
+    CreatedResponseLeads:
+      description: Recurso creado con éxito
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Recurso creado con éxito
+              data:
+                $ref: '#/components/schemas/Lead'
+    SuccessResponseLeadsArray:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lead'
+    SuccessResponseFinancialInstitutionsArray:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FinancialInstitution'
+    SuccessResponseChangesHistoryArray:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangesHistory'
+    SuccessResponseLeadContactsArray:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeadContact'
+    SuccessResponseLeadScoresArray:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeadScore'
+    SuccessResponseLeadNotesArray:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeadNote'
+    SuccessResponseCampaignsArray:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Campaign'
+    SuccessResponseUsersArray:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    SuccessResponseLoansArray:
+      description: Operación exitosa
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Operación exitosa
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Loan'
+    NoContentResponse:
+      description: Recurso eliminado con éxito
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: Recurso eliminado con éxito
+    BadRequestResponse:
+      description: Solicitud incorrecta
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Solicitud incorrecta
+              errors:
+                type: array
+                items:
+                  type: string
+    NotFoundResponse:
+      description: Recurso no encontrado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Recurso no encontrado
+    MethodNotAllowedResponse:
+      description: Método no permitido
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Método no permitido
+  parameters:
+      LimitParameter:
+        name: limit
+        in: query
+        description: Número máximo de resultados a devolver
+        required: false
+        schema:
+          type: integer
+          default: 10
+      IdParameter:
+        name: id
+        in: path
+        description: ID del recurso
+        required: true
+        schema:
+          type: string
+  requestBodies:
+    CreateFinancialInstitutionRequestBody:
+      description: Datos de la institución financiera a crear
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nombre de la institución financiera
+              address:
+                type: string
+                description: Dirección de la institución financiera
+    UpdateFinancialInstitutionRequestBody:
+      description: Datos de la institución financiera a actualizar
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nombre de la institución financiera
+              address:
+                type: string
+                description: Dirección de la institución financiera
+    CreateChangesHistoryRequestBody:
+      description: Datos del historial de cambios a crear
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              changeType:
+                type: string
+                description: Tipo de cambio
+              description:
+                type: string
+                description: Descripción del cambio
+    UpdateChangesHistoryRequestBody:
+      description: Datos del historial de cambios a actualizar
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              changeType:
+                type: string
+                description: Tipo de cambio
+              description:
+                type: string
+                description: Descripción del cambio
+    CreateLeadContactRequestBody:
+      description: Datos del contacto de lead a crear
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nombre del contacto de lead
+              email:
+                type: string
+                description: Correo electrónico del contacto de lead
+    UpdateLeadContactRequestBody:
+      description: Datos del contacto de lead a actualizar
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nombre del contacto de lead
+              email:
+                type: string
+                description: Correo electrónico del contacto de lead
+    ValidateCIRequestBody:
+      description: Datos del CI a validar
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              ci:
+                type: string
+                description: CI a validar
+    CreateLeadScoreRequestBody:
+      description: Datos del puntaje de lead a crear
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              leadId:
+                type: string
+                description: ID del lead
+              score:
+                type: integer
+                description: Puntaje del lead
+    UpdateLeadScoreRequestBody:
+      description: Datos del puntaje de lead a actualizar
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              leadId:
+                type: string
+                description: ID del lead
+              score:
+                type: integer
+                description: Puntaje del lead
+    CreateLeadNoteRequestBody:
+      description: Datos de la nota de lead a crear
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              leadId:
+                type: string
+                description: ID del lead
+              note:
+                type: string
+                description: Nota del lead
+    UpdateLeadNoteRequestBody:
+      description: Datos de la nota de lead a actualizar
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              leadId:
+                type: string
+                description: ID del lead
+              note:
+                type: string
+                description: Nota del lead
+    CreateCampaignRequestBody:
+      description: Datos de la campaña a crear
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nombre de la campaña
+              description:
+                type: string
+                description: Descripción de la campaña
+    UpdateCampaignRequestBody:
+      description: Datos de la campaña a actualizar
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nombre de la campaña
+              description:
+                type: string
+                description: Descripción de la campaña
+    SendToPrezztaRequestBody:
+      description: Datos a enviar a Prezzta
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                description: Datos a enviar
+    CreateUserRequestBody:
+      description: Datos del usuario a crear
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                description: Nombre de usuario
+              email:
+                type: string
+                description: Correo electrónico del usuario
+    UpdateUserRequestBody:
+      description: Datos del usuario a actualizar
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                description: Nombre de usuario
+              email:
+                type: string
+                description: Correo electrónico del usuario
+    CreateLoanRequestBody:
+      description: Datos del préstamo a crear
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              amount:
+                type: number
+                description: Monto del préstamo
+              term:
+                type: integer
+                description: Plazo del préstamo en meses
+    UpdateLoanRequestBody:
+      description: Datos del préstamo a actualizar
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              amount:
+                type: number
+                description: Monto del préstamo
+              term:
+                type: integer
+                description: Plazo del préstamo en meses
+    CreateLeadRequestBody:
+      description: Datos del lead a crear
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nombre del lead
+              email:
+                type: string
+                description: Correo electrónico del lead
+    UpdateLeadRequestBody:
+      description: Datos del lead a actualizar
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nombre del lead
+              email:
+                type: string
+                description: Correo electrónico del lead
+    ValidateMIMERequestBody:
+      description: Datos del MIME a validar
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              mimeType:
+                type: string
+                description: Tipo MIME a validar
+  schemas:
+    ChangesHistory:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único del historial de cambios
+        table_name:
+          type: string
+          description: Nombre de la tabla en la que se realizó el cambio
+        comments:
+          type: string
+          description: Comentarios sobre el cambio realizado
+        changed_by_user_id:
+          type: string
+          description: Identificador del usuario que realizó el cambio
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación del registro del historial de cambios
+
+        # Campos relacionados con el lead
+        lead_id:
+          type: string
+          description: Identificador único del lead
+          nullable: true
+        new_lead_name:
+          type: string
+          description: Nuevo nombre del lead después del cambio
+          nullable: true
+        previous_lead_name:
+          type: string
+          description: Nombre anterior del lead antes del cambio
+          nullable: true
+        new_lead_birth_date:
+          type: string
+          format: date
+          description: Nueva fecha de nacimiento del lead después del cambio
+          nullable: true
+        previous_lead_birth_date:
+          type: string
+          format: date
+          description: Fecha de nacimiento anterior del lead antes del cambio
+          nullable: true
+        new_lead_last_name:
+          type: string
+          description: Nuevo apellido del lead después del cambio
+          nullable: true
+        previous_lead_last_name:
+          type: string
+          description: Apellido anterior del lead antes del cambio
+          nullable: true
+        new_lead_document_type:
+          type: string
+          description: Nuevo tipo de documento del lead después del cambio
+          nullable: true
+        previous_lead_document_type:
+          type: string
+          description: Tipo de documento anterior del lead antes del cambio
+          nullable: true
+        new_lead_marital_status:
+          type: string
+          description: Nuevo estado civil del lead después del cambio
+          nullable: true
+        previous_lead_marital_status:
+          type: string
+          description: Estado civil anterior del lead antes del cambio
+          nullable: true
+        new_lead_address:
+          type: string
+          description: Nueva dirección del lead después del cambio
+          nullable: true
+        previous_lead_address:
+          type: string
+          description: Dirección anterior del lead antes del cambio
+          nullable: true
+        new_lead_email:
+          type: string
+          format: email
+          description: Nuevo correo electrónico del lead después del cambio
+          nullable: true
+        previous_lead_email:
+          type: string
+          format: email
+          description: Correo electrónico anterior del lead antes del cambio
+          nullable: true
+        new_lead_status:
+          type: string
+          description: Nuevo estado del lead después del cambio
+          nullable: true
+        previous_lead_status:
+          type: string
+          description: Estado anterior del lead antes del cambio
+          nullable: true
+        new_lead_employer:
+          type: string
+          description: Nuevo empleador del lead después del cambio
+          nullable: true
+        previous_lead_employer:
+          type: string
+          description: Empleador anterior del lead antes del cambio
+          nullable: true
+        new_lead_document:
+          type: string
+          description: Nuevo documento de identificación del lead después del cambio
+          nullable: true
+        previous_lead_document:
+          type: string
+          description: Documento de identificación anterior del lead antes del cambio
+          nullable: true
+        new_lead_phone:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Nuevo número de teléfono del lead después del cambio
+          nullable: true
+        previous_lead_phone:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Número de teléfono anterior del lead antes del cambio
+          nullable: true
+        new_lead_monthly_income:
+          type: number
+          description: Nuevo ingreso mensual del lead después del cambio
+          nullable: true
+        previous_lead_monthly_income:
+          type: number
+          description: Ingreso mensual anterior del lead antes del cambio
+          nullable: true
+        new_lead_job_position:
+          type: string
+          description: Nueva posición laboral del lead después del cambio
+          nullable: true
+        previous_lead_job_position:
+          type: string
+          description: Posición laboral anterior del lead antes del cambio
+          nullable: true
+        new_lead_job_city:
+          type: string
+          description: Nueva ciudad del lugar de trabajo del lead después del cambio
+          nullable: true
+        previous_lead_job_city:
+          type: string
+          description: Ciudad del lugar de trabajo anterior del lead antes del cambio
+          nullable: true
+        new_lead_job_state:
+          type: string
+          description: Nuevo estado del lugar de trabajo del lead después del cambio
+          nullable: true
+        previous_lead_job_state:
+          type: string
+          description: Estado del lugar de trabajo anterior del lead antes del cambio
+          nullable: true
+        new_lead_job_country:
+          type: string
+          description: Nuevo país del lugar de trabajo del lead después del cambio
+          nullable: true
+        previous_lead_job_country:
+          type: string
+          description: País del lugar de trabajo anterior del lead antes del cambio
+          nullable: true
+        new_lead_job_address:
+          type: string
+          description: Nueva dirección del lugar de trabajo del lead después del cambio
+          nullable: true
+        previous_lead_job_address:
+          type: string
+          description: Dirección del lugar de trabajo anterior del lead antes del cambio
+          nullable: true
+
+        # Campos relacionados con la nota del lead
+        lead_note_id:
+          type: string
+          description: Identificador único de la nota del lead
+          nullable: true
+        new_lead_note:
+          type: string
+          description: Nuevo contenido de la nota del lead después del cambio
+          nullable: true
+        previous_lead_note:
+          type: string
+          description: Contenido anterior de la nota del lead antes del cambio
+          nullable: true
+        new_lead_note_rejection_reason:
+          type: string
+          description: Nueva razón de rechazo asociada a la nota del lead después del cambio
+          nullable: true
+        previous_lead_note_rejection_reason:
+          type: string
+          description: Razón de rechazo anterior asociada a la nota del lead antes del cambio
+          nullable: true
+        new_lead_note_author_id:
+          type: string
+          description: Nuevo identificador del autor de la nota del lead después del cambio
+          nullable: true
+        previous_lead_note_author_id:
+          type: string
+          description: Identificador anterior del autor de la nota del lead antes del cambio
+          nullable: true
+
+        # Campos relacionados con el puntaje del lead
+        lead_score_id:
+          type: string
+          description: Identificador único puntaje del lead
+          nullable: true
+        new_lead_score_bcu_score:
+          type: number
+          description: Nuevo puntaje del BCU del lead después del cambio
+          nullable: true
+        previous_lead_score_bcu_score:
+          type: number
+          description: Puntaje del BCU anterior del lead antes del cambio
+          nullable: true
+        new_lead_score_clearing_comment:
+          type: string
+          description: Nuevo comentario sobre el puntaje de clearing del lead después del cambio
+          nullable: true
+        previous_lead_score_clearing_comment:
+          type: string
+          description: Comentario anterior sobre el puntaje de clearing del lead antes del cambio
+          nullable: true
+        new_lead_score_moz_score:
+          type: number
+          description: Nuevo puntaje del MOZ del lead después del cambio
+          nullable: true
+        previous_lead_score_moz_score:
+          type: number
+          description: Puntaje del MOZ anterior del lead antes del cambio
+          nullable: true
+        new_lead_score_clearing_score:
+          type: number
+          description: Nuevo puntaje de clearing del lead después del cambio
+          nullable: true
+        previous_lead_score_clearing_score:
+          type: number
+          description: Puntaje de clearing anterior del lead antes del cambio
+          nullable: true
+        new_lead_score_bcu_comment:
+          type: string
+          description: Nuevo comentario sobre el puntaje del BCU del lead después del cambio
+          nullable: true
+        previous_lead_score_bcu_comment:
+          type: string
+          description: Comentario anterior sobre el puntaje del BCU del lead antes del cambio
+          nullable: true
+        new_lead_score_moz_comment:
+          type: string
+          description: Nuevo comentario sobre el puntaje del MOZ del lead después del cambio
+          nullable: true
+        previous_lead_score_moz_comment:
+          type: string
+          description: Comentario anterior sobre el puntaje del MOZ del lead antes del cambio
+          nullable: true
+
+        # Campos relacionados con el contacto
+        contact_id:
+          type: string
+          description: Identificador único del contacto
+          nullable: true
+        new_contact_name:
+          type: string
+          description: Nuevo nombre del contacto después del cambio
+          nullable: true
+        previous_contact_name:
+          type: string
+          description: Nombre anterior del contacto antes del cambio
+          nullable: true
+        new_contact_last_name:
+          type: string
+          description: Nuevo apellido del contacto después del cambio
+          nullable: true
+        previous_contact_last_name:
+          type: string
+          description: Apellido anterior del contacto antes del cambio
+          nullable: true
+        new_contact_email:
+          type: string
+          format: email
+          description: Nuevo correo electrónico del contacto después del cambio
+          nullable: true
+        previous_contact_email:
+          type: string
+          format: email
+          description: Correo electrónico anterior del contacto antes del cambio
+          nullable: true
+        new_contact_phone:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Nuevo número de teléfono del contacto después del cambio
+          nullable: true
+        previous_contact_phone:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Número de teléfono anterior del contacto antes del cambio
+          nullable: true
+        new_contact_relationship:
+          type: string
+          description: Nueva relación con el lead del contacto después del cambio
+          nullable: true
+        previous_contact_relationship:
+          type: string
+          description: Relación anterior con el lead del contacto antes del cambio
+          nullable: true
+
+        # Campos relacionados con el préstamo
+        loan_id:
+          type: string
+          description: Identificador único del préstamo
+          nullable: true
+        new_loan_collateral:
+          type: string
+          description: Nueva garantía ofrecida para el préstamo después del cambio
+          nullable: true
+        previous_loan_collateral:
+          type: string
+          description: Garantía anterior ofrecida para el préstamo antes del cambio
+          nullable: true
+        new_loan_interest_rate:
+          type: number
+          description: Nueva tasa de interés del préstamo después del cambio
+          nullable: true
+        previous_loan_interest_rate:
+          type: number
+          description: Tasa de interés anterior del préstamo antes del cambio
+          nullable: true
+        new_loan_remaining_balance:
+          type: number
+          description: Nuevo saldo restante del préstamo después del cambio
+          nullable: true
+        previous_loan_remaining_balance:
+          type: number
+          description: Saldo restante anterior del préstamo antes del cambio
+          nullable: true
+        new_loan_financial_institution_id:
+          type: string
+          description: Nuevo identificador de la institución financiera que otorga el préstamo después del cambio
+          nullable: true
+        previous_loan_financial_institution_id:
+          type: string
+          description: Identificador anterior de la institución financiera que otorga el préstamo antes del cambio
+          nullable: true
+        new_loan_amount:
+          type: number
+          description: Nuevo monto del préstamo después del cambio
+          nullable: true
+        previous_loan_amount:
+          type: number
+          description: Monto anterior del préstamo antes del cambio
+          nullable: true
+        new_loan_start_date:
+          type: string
+          format: date
+          description: Nueva fecha de inicio del préstamo después del cambio
+          nullable: true
+        previous_loan_start_date:
+          type: string
+          format: date
+          description: Fecha de inicio anterior del préstamo antes del cambio
+          nullable: true
+        new_loan_term:
+          type: number
+          description: Nuevo plazo del préstamo en meses después del cambio
+          nullable: true
+        previous_loan_term:
+          type: number
+          description: Plazo anterior del préstamo en meses antes del cambio
+          nullable: true
+        new_loan_campaign_id:
+          type: string
+          description: Nuevo identificador de la campaña asociada al préstamo después del cambio
+          nullable: true
+        previous_loan_campaign_id:
+          type: string
+          description: Identificador anterior de la campaña asociada al préstamo antes del cambio
+          nullable: true
+        new_loan_payment_frequency:
+          type: string
+          description: Nueva frecuencia de los pagos del préstamo después del cambio
+          nullable: true
+        previous_loan_payment_frequency:
+          type: string
+          description: Frecuencia de los pagos anterior del préstamo antes del cambio
+          nullable: true
+        new_loan_type:
+          type: string
+          description: Nuevo tipo de préstamo después del cambio
+          nullable: true
+        previous_loan_type:
+          type: string
+          description: Tipo de préstamo anterior antes del cambio
+          nullable: true
+        new_loan_end_date:
+          type: string
+          format: date
+          description: Nueva fecha de finalización del préstamo después del cambio
+          nullable: true
+        previous_loan_end_date:
+          type: string
+          format: date
+          description: Fecha de finalización anterior del préstamo antes del cambio
+          nullable: true
+
+        # Campos relacionados con el usuario
+        user_id:
+          type: string
+          description: Identificador único del usuario
+          nullable: true
+        new_user_username:
+          type: string
+          description: Nuevo nombre de usuario después del cambio
+          nullable: true
+        previous_user_username:
+          type: string
+          description: Nombre de usuario anterior antes del cambio
+          nullable: true
+        new_user_email:
+          type: string
+          format: email
+          description: Nuevo correo electrónico del usuario después del cambio
+          nullable: true
+        previous_user_email:
+          type: string
+          format: email
+          description: Correo electrónico anterior del usuario antes del cambio
+          nullable: true
+        new_user_role:
+          type: string
+          description: Nuevo rol del usuario después del cambio
+          nullable: true
+        previous_user_role:
+          type: string
+          description: Rol anterior del usuario antes del cambio
+          nullable: true
+        new_user_financial_institution_id:
+          type: string
+          description: Nuevo identificador de la institución financiera asociada al usuario después del cambio
+          nullable: true
+        previous_user_financial_institution_id:
+          type: string
+          description: Identificador anterior de la institución financiera asociada al usuario antes del cambio
+          nullable: true
+        new_user_campaign_id:
+          type: string
+          description: Nuevo identificador de la campaña asociada al usuario después del cambio
+          nullable: true
+        previous_user_campaign_id:
+          type: string
+          description: Identificador anterior de la campaña asociada al usuario antes del cambio
+          nullable: true
+        new_user_auth0_id:
+          type: string
+          description: Nuevo identificador del usuario en Auth0 después del cambio
+          nullable: true
+        previous_user_auth0_id:
+          type: string
+          description: Identificador anterior del usuario en Auth0 antes del cambio
+          nullable: true
+        new_user_first_name:
+          type: string
+          description: Nuevo nombre del usuario después del cambio
+          nullable: true
+        previous_user_first_name:
+          type: string
+          description: Nombre anterior del usuario antes del cambio
+          nullable: true
+        new_user_last_name:
+          type: string
+          description: Nuevo apellido del usuario después del cambio
+          nullable: true
+        previous_user_last_name:
+          type: string
+          description: Apellido anterior del usuario antes del cambio
+          nullable: true
+        new_user_phone_number:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Nuevo número de teléfono del usuario después del cambio
+          nullable: true
+        previous_user_phone_number:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Número de teléfono anterior del usuario antes del cambio
+          nullable: true
+        new_user_date_of_birth:
+          type: string
+          format: date
+          description: Nueva fecha de nacimiento del usuario después del cambio
+          nullable: true
+        previous_user_date_of_birth:
+          type: string
+          format: date
+          description: Fecha de nacimiento anterior del usuario antes del cambio
+          nullable: true
+        new_user_city:
+          type: string
+          description: Nueva ciudad de residencia del usuario después del cambio
+          nullable: true
+        previous_user_city:
+          type: string
+          description: Ciudad de residencia anterior del usuario antes del cambio
+          nullable: true
+        new_user_state:
+          type: string
+          description: Nuevo estado de residencia del usuario después del cambio
+          nullable: true
+        previous_user_state:
+          type: string
+          description: Estado de residencia anterior del usuario antes del cambio
+          nullable: true
+        new_user_country:
+          type: string
+          description: Nuevo país de residencia del usuario después del cambio
+          nullable: true
+        previous_user_country:
+          type: string
+          description: País de residencia anterior del usuario antes del cambio
+          nullable: true
+        new_user_address:
+          type: string
+          description: Nueva dirección de residencia del usuario después del cambio
+          nullable: true
+        previous_user_address:
+          type: string
+          description: Dirección de residencia anterior del usuario antes del cambio
+          nullable: true
+        new_user_addressNumber:
+          type: string
+          description: Nuevo número de la dirección de residencia del usuario después del cambio
+          nullable: true
+        previous_user_addressNumber:
+          type: string
+          description: Número de la dirección de residencia anterior del usuario antes del cambio
+          nullable: true
+        new_user_postal_code:
+          type: string
+          description: Nuevo código postal de la dirección de residencia del usuario después del cambio
+          nullable: true
+        previous_user_postal_code:
+          type: string
+          description: Código postal de la dirección de residencia anterior del usuario antes del cambio
+          nullable: true
+
+        # Campos relacionados con la campaña
+        campaign_id:
+          type: string
+          description: Identificador único de la campaña
+          nullable: true
+        new_campaign_name:
+          type: string
+          description: Nuevo nombre de la campaña después del cambio
+          nullable: true
+        previous_campaign_name:
+          type: string
+          description: Nombre anterior de la campaña antes del cambio
+          nullable: true
+        new_campaign_description:
+          type: string
+          description: Nueva descripción de la campaña después del cambio
+          nullable: true
+        previous_campaign_description:
+          type: string
+          description: Descripción anterior de la campaña antes del cambio
+          nullable: true
+        new_campaign_start_date:
+          type: string
+          format: date
+          description: Nueva fecha de inicio de la campaña después del cambio
+          nullable: true
+        previous_campaign_start_date:
+          type: string
+          format: date
+          description: Fecha de inicio anterior de la campaña antes del cambio
+          nullable: true
+        new_campaign_end_date:
+          type: string
+          format: date
+          description: Nueva fecha de finalización de la campaña después del cambio
+          nullable: true
+        previous_campaign_end_date:
+          type: string
+          format: date
+          description: Fecha de finalización anterior de la campaña antes del cambio
+          nullable: true
+        new_campaign_budget:
+          type: number
+          description: Nuevo presupuesto de la campaña después del cambio
+          nullable: true
+        previous_campaign_budget:
+          type: number
+          description: Presupuesto anterior de la campaña antes del cambio
+          nullable: true
+        new_campaign_target_audience:
+          type: string
+          description: Nueva audiencia objetivo de la campaña después del cambio
+          nullable: true
+        previous_campaign_target_audience:
+          type: string
+          description: Audiencia objetivo anterior de la campaña antes del cambio
+          nullable: true
+        new_campaign_status:
+          type: string
+          description: Nuevo estado de la campaña después del cambio
+          nullable: true
+        previous_campaign_status:
+          type: string
+          description: Estado anterior de la campaña antes del cambio
+          nullable: true
+        new_campaign_campaign_manager:
+          type: string
+          description: Nuevo gerente de la campaña después del cambio
+          nullable: true
+        previous_campaign_campaign_manager:
+          type: string
+          description: Gerente anterior de la campaña antes del cambio
+          nullable: true
+        new_campaign_impressions:
+          type: number
+          description: Nuevas impresiones de la campaña después del cambio
+          nullable: true
+        previous_campaign_impressions:
+          type: number
+          description: Impresiones anteriores de la campaña antes del cambio
+          nullable: true
+        new_campaign_conversions:
+          type: number
+          description: Nuevas conversiones de la campaña después del cambio
+          nullable: true
+        previous_campaign_conversions:
+          type: number
+          description: Conversiones anteriores de la campaña antes del cambio
+          nullable: true
+        new_campaign_platform:
+          type: string
+          description: Nueva plataforma de la campaña después del cambio
+          nullable: true
+        previous_campaign_platform:
+          type: string
+          description: Plataforma anterior de la campaña antes del cambio
+          nullable: true
+        new_campaign_messages_sent:
+          type: number
+          description: Nuevos mensajes enviados de la campaña después del cambio
+          nullable: true
+        previous_campaign_messages_sent:
+          type: number
+          description: Mensajes enviados anteriores de la campaña antes del cambio
+          nullable: true
+        new_campaign_responses_received:
+          type: number
+          description: Nuevas respuestas recibidas de la campaña después del cambio
+          nullable: true
+        previous_campaign_responses_received:
+          type: number
+          description: Respuestas recibidas anteriores de la campaña antes del cambio
+          nullable: true
+
+        # Campos relacionados con la institución financiera
+        financial_institution_id:
+          type: string
+          description: Identificador único de la institución financiera
+          nullable: true
+        new_financial_institution_name:
+          type: string
+          description: Nuevo nombre de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_name:
+          type: string
+          description: Nombre anterior de la institución financiera antes del cambio
+          nullable: true
+        new_financial_institution_email:
+          type: string
+          format: email
+          description: Nuevo correo electrónico de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_email:
+          type: string
+          format: email
+          description: Correo electrónico anterior de la institución financiera antes del cambio
+          nullable: true
+        new_financial_institution_phone:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Nuevo número de teléfono de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_phone:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Número de teléfono anterior de la institución financiera antes del cambio
+          nullable: true
+        new_financial_institution_city:
+          type: string
+          description: Nueva ciudad de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_city:
+          type: string
+          description: Ciudad anterior de la institución financiera antes del cambio
+          nullable: true
+        new_financial_institution_country:
+          type: string
+          description: Nuevo país de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_country:
+          type: string
+          description: País anterior de la institución financiera antes del cambio
+          nullable: true
+        new_financial_institution_address:
+          type: string
+          description: Nueva dirección de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_address:
+          type: string
+          description: Dirección anterior de la institución financiera antes del cambio
+          nullable: true
+        new_financial_institution_addressNumber:
+          type: string
+          description: Nuevo número de dirección de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_addressNumber:
+          type: string
+          description: Número de dirección anterior de la institución financiera antes del cambio
+          nullable: true
+        new_financial_institution_postal_code:
+          type: string
+          description: Nuevo código postal de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_postal_code:
+          type: string
+          description: Código postal anterior de la institución financiera antes del cambio
+          nullable: true
+        new_financial_institution_website:
+          type: string
+          format: uri
+          description: Nuevo sitio web de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_website:
+          type: string
+          format: uri
+          description: Sitio web anterior de la institución financiera antes del cambio
+          nullable: true
+        new_financial_institution_contact_person:
+          type: string
+          description: Nueva persona de contacto de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_contact_person:
+          type: string
+          description: Persona de contacto anterior de la institución financiera antes del cambio
+          nullable: true
+        new_financial_institution_type:
+          type: string
+          description: Nuevo tipo de institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_type:
+          type: string
+          description: Tipo de institución financiera anterior antes del cambio
+          nullable: true
+        new_financial_institution_description:
+          type: string
+          description: Nueva descripción de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_description:
+          type: string
+          description: Descripción anterior de la institución financiera antes del cambio
+          nullable: true
+        new_financial_institution_established_year:
+          type: integer
+          description: Nuevo año de establecimiento de la institución financiera después del cambio
+          nullable: true
+        previous_financial_institution_established_year:
+          type: integer
+          description: Año de establecimiento anterior de la institución financiera antes del cambio
+          nullable: true
+    Lead:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único del lead
+        campaign_id:
+          type: string
+          description: Identificador de la campaña asociada al lead
+        name:
+          type: string
+          description: Nombre opcional del lead
+          nullable: true
+        last_name:
+          type: string
+          description: Apellido opcional del lead
+          nullable: true
+        birth_date:
+          type: string
+          format: date
+          description: Fecha de nacimiento opcional del lead
+          nullable: true
+        document_type:
+          type: string
+          description: Tipo de documento de identificación opcional del lead (por ejemplo, pasaporte, DNI)
+          nullable: true
+        document:
+          type: string
+          description: Número de documento de identificación opcional del lead
+          nullable: true
+        marital_status:
+          type: string
+          description: Estado civil opcional del lead
+          nullable: true
+        email:
+          type: string
+          format: email
+          description: Correo electrónico opcional del lead
+          nullable: true
+        phone:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Número de teléfono opcional del lead
+          nullable: true
+        city:
+          type: string
+          description: Ciudad opcional de residencia del lead
+          nullable: true
+        state:
+          type: string
+          description: Estado opcional de residencia del lead
+          nullable: true
+        country:
+          type: string
+          description: País opcional de residencia del lead
+          nullable: true
+        address:
+          type: string
+          description: Dirección opcional de residencia del lead
+          nullable: true
+        addressNumber:
+          type: string
+          description: Número opcional de la dirección de residencia del lead
+          nullable: true
+        postal_code:
+          type: string
+          description: Código postal opcional de la dirección de residencia del lead
+          nullable: true
+        employer:
+          type: string
+          description: Empleador opcional del lead
+          nullable: true
+        monthly_income:
+          type: number
+          description: Ingreso mensual opcional del lead
+          nullable: true
+        laboral_status:
+          type: string
+          description: Estado laboral opcional del lead (por ejemplo, empleado, desempleado)
+          nullable: true
+        job_position:
+          type: string
+          description: Posición laboral opcional del lead
+          nullable: true
+        job_city:
+          type: string
+          description: Ciudad opcional del lugar de trabajo del lead
+          nullable: true
+        job_state:
+          type: string
+          description: Estado opcional del lugar de trabajo del lead
+          nullable: true
+        job_country:
+          type: string
+          description: País opcional del lugar de trabajo del lead
+          nullable: true
+        job_address:
+          type: string
+          description: Dirección opcional del lugar de trabajo del lead
+          nullable: true
+        job_addressNumber:
+          type: string
+          description: Número opcional de la dirección del lugar de trabajo del lead
+          nullable: true
+        score_id:
+          type: string
+          description: Identificador opcional del puntaje crediticio del lead
+          nullable: true
+        document_images:
+          type: array
+          items:
+            type: string
+          description: Arreglo opcional de imágenes de documentos del lead
+          nullable: true
+        status:
+          type: string
+          description: Estado del lead (por ejemplo, activo, inactivo)
+          enum:
+            - BotStatus
+            - HumanStatus
+        assigned_to:
+          type: string
+          description: Identificador opcional de la persona asignada al lead
+          nullable: true
+        contacts_id:
+          type: array
+          items:
+            type: string
+          description: Lista opcional de contactos del lead
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación del registro del lead
+        updated_at:
+          type: string
+          format: date-time
+          description: Fecha de la última actualización del registro del lead
+      required:
+        - id
+        - campaign_id
+        - status
+        - created_at
+        - updated_at
+    Loan:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único del préstamo
+        lead_id:
+          type: string
+          description: Identificador del lead asociado al préstamo
+        campaign_id:
+          type: string
+          description: Identificador de la campaña asociada al préstamo
+        financial_institution_id:
+          type: string
+          description: Identificador de la institución financiera que otorga el préstamo
+        approved_by:
+          type: string
+          description: Identificador opcional de la persona que aprobó el préstamo
+          nullable: true
+        amount:
+          type: number
+          description: Monto opcional del préstamo
+          nullable: true
+        collateral:
+          type: string
+          description: Garantía opcional ofrecida para el préstamo
+          nullable: true
+        interest_rate:
+          type: number
+          description: Tasa de interés opcional del préstamo
+          nullable: true
+        remaining_balance:
+          type: number
+          description: Saldo opcional restante del préstamo
+          nullable: true
+        term:
+          type: number
+          description: Plazo opcional del préstamo en meses
+          nullable: true
+        payment_frequency:
+          type: string
+          description: Frecuencia opcional de los pagos (por ejemplo, mensual, trimestral)
+          nullable: true
+        loan_type:
+          type: string
+          description: Tipo opcional de préstamo (por ejemplo, personal, hipotecario)
+          nullable: true
+        purpose:
+          type: string
+          description: Propósito opcional del préstamo
+          nullable: true
+        late_fees:
+          type: number
+          description: Cargos opcionales por pagos atrasados
+          nullable: true
+        grace_period:
+          type: number
+          description: Período opcional de gracia antes de que comiencen los pagos
+          nullable: true
+        payment_platform:
+          type: string
+          description: Plataforma opcional utilizada para los pagos
+          nullable: true
+        payment_schedule:
+          type: string
+          description: Calendario opcional de pagos
+          nullable: true
+        payment_method:
+          type: string
+          description: Método opcional de pago (por ejemplo, transferencia bancaria, tarjeta de crédito)
+          nullable: true
+        disbursement_date:
+          type: string
+          format: date
+          description: Fecha opcional de desembolso del préstamo
+          nullable: true
+        start_date:
+          type: string
+          format: date
+          description: Fecha de inicio del préstamo
+        end_date:
+          type: string
+          format: date
+          description: Fecha opcional de finalización del préstamo
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación del registro del préstamo
+        updated_at:
+          type: string
+          format: date-time
+          description: Fecha de la última actualización del registro del préstamo
+      required:
+          - id
+          - lead_id
+          - campaign_id
+          - financial_institution_id
+          - start_date
+          - created_at
+          - updated_at
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único del usuario
+        email:
+          type: string
+          format: email
+          description: Correo electrónico del usuario
+        auth0_id:
+          type: string
+          description: Identificador único del usuario en Auth0
+        username:
+          type: string
+          description: Nombre de usuario
+        first_name:
+          type: string
+          description: Nombre opcional del usuario
+          nullable: true
+        last_name:
+          type: string
+          description: Apellido opcional del usuario
+          nullable: true
+        phone_number:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Número de teléfono opcional del usuario
+          nullable: true
+        date_of_birth:
+          type: string
+          format: date
+          description: Fecha de nacimiento opcional del usuario
+          nullable: true
+        city:
+          type: string
+          description: Ciudad opcional de residencia del usuario
+          nullable: true
+        state:
+          type: string
+          description: Estado opcional de residencia del usuario
+          nullable: true
+        country:
+          type: string
+          description: País opcional de residencia del usuario
+          nullable: true
+        address:
+          type: string
+          description: Dirección opcional de residencia del usuario
+          nullable: true
+        addressNumber:
+          type: string
+          description: Número opcional de la dirección de residencia del usuario
+          nullable: true
+        postal_code:
+          type: string
+          description: Código postal opcional de la dirección de residencia del usuario
+          nullable: true
+        role:
+          type: string
+          description: Rol del usuario (por ejemplo, administrador, usuario)
+        campaign_id:
+          type: string
+          description: Identificador opcional de la campaña asociada al usuario
+          nullable: true
+        financial_institution_id:
+          type: integer
+          description: Identificador de la institución financiera asociada al usuario
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación del registro del usuario
+        updated_at:
+          type: string
+          format: date-time
+          description: Fecha de la última actualización del registro del usuario
+      required:
+        - id
+        - email
+        - auth0_id
+        - username
+        - role
+        - financial_institution_id
+        - created_at
+        - updated_at
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único de la campaña
+        financial_institution_id:
+          type: string
+          description: Identificador de la institución financiera asociada a la campaña
+        name:
+          type: string
+          description: Nombre de la campaña
+        description:
+          type: string
+          description: Descripción opcional de la campaña
+          nullable: true
+        status:
+          type: string
+          description: Estado actual de la campaña
+          enum:
+            - ACTIVE
+            - INACTIVE
+            - COMPLETED
+            - CANCELLED
+        platform:
+          type: string
+          description: Plataforma opcional en la que se ejecuta la campaña
+          nullable: true
+        budget:
+          type: number
+          description: Presupuesto opcional asignado a la campaña
+          nullable: true
+        target_audience:
+          type: string
+          description: Audiencia objetivo opcional de la campaña
+          nullable: true
+        conversations:
+          type: number
+          description: Número opcional de conversaciones generadas por la campaña
+          nullable: true
+        conversions:
+          type: number
+          description: Número opcional de conversiones logradas por la campaña
+          nullable: true
+        campaign_manager:
+          type: string
+          description: Nombre opcional del gerente de la campaña
+          nullable: true
+        messages_sent:
+          type: number
+          description: Número opcional de mensajes enviados durante la campaña
+          nullable: true
+        responses_received:
+          type: number
+          description: Número opcional de respuestas recibidas durante la campaña
+          nullable: true
+        start_date:
+          type: string
+          format: date
+          description: Fecha de inicio de la campaña
+          nullable: true
+        end_date:
+          type: string
+          format: date
+          description: Fecha opcional de finalización de la campaña
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación del registro de la campaña
+        updated_at:
+          type: string
+          format: date-time
+          description: Fecha de la última actualización del registro de la campaña
+      required:
+        - id
+        - financial_institution_id
+        - name
+        - status
+        - created_at
+        - updated_at
+    LeadNote:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único de la nota
+        lead_id:
+          type: number
+          description: Identificador del lead asociado a la nota
+        note:
+          type: string
+          description: Contenido opcional de la nota
+          nullable: true
+        rejection_reason:
+          type: string
+          description: Razón opcional de rechazo asociada a la nota
+          nullable: true
+        author_id:
+          type: string
+          description: Identificador opcional del autor de la nota
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación de la nota
+        updated_at:
+          type: string
+          format: date-time
+          description: Fecha de la última actualización de la nota
+      required:
+        - id
+        - lead_id
+        - created_at
+        - updated_at
+    LeadScore:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único del puntaje
+        country:
+          type: string
+          description: País asociado al lead
+        document:
+          type: string
+          description: Documento de identificación del lead
+        document_type:
+          type: string
+          description: Tipo de documento de identificación (por ejemplo, pasaporte, DNI)
+        bcu_score:
+          type: number
+          description: Puntaje opcional del BCU (Banco Central del Uruguay)
+          nullable: true
+        moz_score:
+          type: number
+          description: Puntaje opcional del MOZ (Mozambique)
+          nullable: true
+        clearing_score:
+          type: number
+          description: Puntaje opcional de clearing (limpieza de crédito)
+          nullable: true
+        bcu_status:
+          type: string
+          description: Estado opcional del puntaje del BCU
+          nullable: true
+        moz_status:
+          type: string
+          description: Estado opcional del puntaje del MOZ
+          nullable: true
+        clearing_status:
+          type: string
+          description: Estado opcional del puntaje de clearing
+          nullable: true
+        bcu_comment:
+          type: string
+          description: Comentario opcional sobre el puntaje del BCU
+          nullable: true
+        moz_comment:
+          type: string
+          description: Comentario opcional sobre el puntaje del MOZ
+          nullable: true
+        clearing_comment:
+          type: string
+          description: Comentario opcional sobre el puntaje de clearing
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación del registro del puntaje
+        updated_at:
+          type: string
+          format: date-time
+          description: Fecha de la última actualización del registro del puntaje
+      required:
+        - id
+        - country
+        - document
+        - document_type
+        - created_at
+        - updated_at
+    LeadContact:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único del contacto
+        name:
+          type: string
+          description: Nombre del contacto
+        last_name:
+          type: string
+          description: Apellido opcional del contacto
+          nullable: true
+        email:
+          type: string
+          format: email
+          description: Correo electrónico opcional del contacto
+          nullable: true
+        phone:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Número de teléfono del contacto
+        relationship:
+          type: string
+          description: Relación opcional con el lead (por ejemplo, amigo, familiar, colega)
+          nullable: true
+        country:
+          type: string
+          description: País opcional de residencia del contacto
+          nullable: true
+        city:
+          type: string
+          description: Ciudad opcional de residencia del contacto
+          nullable: true
+        state:
+          type: string
+          description: Estado opcional de residencia del contacto
+          nullable: true
+        address:
+          type: string
+          description: Dirección opcional de residencia del contacto
+          nullable: true
+        addressNumber:
+          type: string
+          description: Número opcional de la dirección de residencia del contacto
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación del registro del contacto
+        updated_at:
+          type: string
+          format: date-time
+          description: Fecha de la última actualización del registro del contacto
+      required:
+        - id
+        - name
+        - phone
+        - created_at
+        - updated_at
+    FinancialInstitution:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único de la institución financiera
+        name:
+          type: string
+          description: Nombre de la institución financiera
+        email:
+          type: string
+          format: email
+          description: Correo electrónico de contacto de la institución
+        phone:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+          description: Número de teléfono de contacto de la institución
+        city:
+          type: string
+          description: Ciudad donde se encuentra ubicada la institución
+          nullable: true
+        country:
+          type: string
+          description: País donde se encuentra ubicada la institución
+          nullable: true
+        address:
+          type: string
+          description: Dirección física de la institución
+          nullable: true
+        addressNumber:
+          type: string
+          description: Número de dirección opcional de la institución
+          nullable: true
+        postal_code:
+          type: string
+          description: Código postal de la institución
+          nullable: true
+        website:
+          type: string
+          format: uri
+          description: Sitio web opcional de la institución
+          nullable: true
+        contact_person:
+          type: string
+          description: Persona de contacto opcional en la institución
+          nullable: true
+        type:
+          type: string
+          description: Tipo opcional de institución financiera (por ejemplo, banco, cooperativa)
+          nullable: true
+        description:
+          type: string
+          description: Descripción opcional de la institución
+          nullable: true
+        established_year:
+          type: integer
+          description: Año opcional en que se estableció la institución
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación del registro de la institución
+        updated_at:
+          type: string
+          format: date-time
+          description: Fecha de la última actualización del registro de la institución
+      required:
+        - id
+        - name
+        - email
+        - phone
+        - created_at
+        - updated_at
+
+paths:
+  /financial-institutions:
+    post:
+      summary: Crear una institución financiera
+      description: Este endpoint permite crear una nueva institución financiera en el sistema.
+      operationId: createFinancialInstitution
+      requestBody:
+        $ref: '#/components/requestBodies/CreateFinancialInstitutionRequestBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedResponseFinancialInstitutions'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+    get:
+      summary: Listar instituciones financieras
+      description: Este endpoint devuelve una lista de todas las instituciones financieras registradas.
+      operationId: listFinancialInstitutions
+      parameters:
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseFinancialInstitutionsArray'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+  /financial-institutions/{id}:
+    get:
+      summary: Obtener una institución financiera por ID
+      description: Este endpoint devuelve los detalles de una institución financiera específica.
+      operationId: getFinancialInstitutionById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseFinancialInstitutions'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    put:
+      summary: Actualizar una institución financiera por ID
+      description: Este endpoint permite actualizar los detalles de una institución financiera específica.
+      operationId: updateFinancialInstitutionById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateFinancialInstitutionRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseFinancialInstitutions'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    delete:
+      summary: Eliminar una institución financiera por ID
+      description: Este endpoint permite eliminar una institución financiera específica.
+      operationId: deleteFinancialInstitutionById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+  /changes-history:
+    post:
+      summary: Crear un historial de cambios
+      description: Este endpoint permite crear un nuevo historial de cambios en el sistema.
+      operationId: createChangesHistory
+      requestBody:
+        $ref: '#/components/requestBodies/CreateChangesHistoryRequestBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedResponseChangesHistory'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+    get:
+      summary: Listar historiales de cambios
+      description: Este endpoint devuelve una lista de todos los historiales de cambios registrados.
+      operationId: listChangesHistories
+      parameters:
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseChangesHistoryArray'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+  /changes-history/{id}:
+    get:
+      summary: Obtener un historial de cambios por ID
+      description: Este endpoint devuelve los detalles de un historial de cambios específico.
+      operationId: getChangesHistoryById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseChangesHistory'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    put:
+      summary: Actualizar un historial de cambios por ID
+      description: Este endpoint permite actualizar los detalles de un historial de cambios específico.
+      operationId: updateChangesHistoryById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateChangesHistoryRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseChangesHistory'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    delete:
+      summary: Eliminar un historial de cambios por ID
+      description: Este endpoint permite eliminar un historial de cambios específico.
+      operationId: deleteChangesHistoryById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+  /lead-contacts:
+    post:
+      summary: Crear un contacto de lead
+      description: Este endpoint permite crear un nuevo contacto de lead en el sistema.
+      operationId: createLeadContact
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeadContactRequestBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedResponseLeadContacts'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+    get:
+      summary: Listar contactos de lead
+      description: Este endpoint devuelve una lista de todos los contactos de lead registrados.
+      operationId: listLeadContacts
+      parameters:
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeadContactsArray'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+  /lead-contacts/{id}:
+    get:
+      summary: Obtener un contacto de lead por ID
+      description: Este endpoint devuelve los detalles de un contacto de lead específico.
+      operationId: getLeadContactById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeadContacts'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    put:
+      summary: Actualizar un contacto de lead por ID
+      description: Este endpoint permite actualizar los detalles de un contacto de lead específico.
+      operationId: updateLeadContactById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeadContactRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeadContacts'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    delete:
+      summary: Eliminar un contacto de lead por ID
+      description: Este endpoint permite eliminar un contacto de lead específico.
+      operationId: deleteLeadContactById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+       
+  /lead-scores:
+    post:
+      summary: Crear un puntaje de lead
+      description: Este endpoint permite crear un nuevo puntaje de lead en el sistema.
+      operationId: createLeadScore
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeadScoreRequestBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedResponseLeadScores'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+    get:
+      summary: Listar puntajes de lead
+      description: Este endpoint devuelve una lista de todos los puntajes de lead registrados.
+      operationId: listLeadScores
+      parameters:
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeadScoresArray'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+  /lead-scores/{id}:
+    get:
+      summary: Obtener un puntaje de lead por ID
+      description: Este endpoint devuelve los detalles de un puntaje de lead específico.
+      operationId: getLeadScoreById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeadScores'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    put:
+      summary: Actualizar un puntaje de lead por ID
+      description: Este endpoint permite actualizar los detalles de un puntaje de lead específico.
+      operationId: updateLeadScoreById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeadScoreRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeadScores'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    delete:
+      summary: Eliminar un puntaje de lead por ID
+      description: Este endpoint permite eliminar un puntaje de lead específico.
+      operationId: deleteLeadScoreById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+  /lead-notes:
+    post:
+      summary: Crear una nota de lead
+      description: Este endpoint permite crear una nueva nota de lead en el sistema.
+      operationId: createLeadNote
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeadNoteRequestBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedResponseLeadNotes'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+    get:
+      summary: Listar notas de lead
+      description: Este endpoint devuelve una lista de todas las notas de lead registradas.
+      operationId: listLeadNotes
+      parameters:
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeadNotesArray'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+  /lead-notes/{id}:
+    get:
+      summary: Obtener una nota de lead por ID
+      description: Este endpoint devuelve los detalles de una nota de lead específica.
+      operationId: getLeadNoteById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeadNotes'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    put:
+      summary: Actualizar una nota de lead por ID
+      description: Este endpoint permite actualizar los detalles de una nota de lead específica.
+      operationId: updateLeadNoteById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeadNoteRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeadNotes'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    delete:
+      summary: Eliminar una nota de lead por ID
+      description: Este endpoint permite eliminar una nota de lead específica.
+      operationId: deleteLeadNoteById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+  /campaigns:
+    post:
+      summary: Crear una campaña
+      description: Este endpoint permite crear una nueva campaña en el sistema.
+      operationId: createCampaign
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCampaignRequestBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedResponseCampaigns'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+    get:
+      summary: Listar campañas
+      description: Este endpoint devuelve una lista de todas las campañas registradas.
+      operationId: listCampaigns
+      parameters:
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseCampaignsArray'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+  /campaigns/{id}:
+    get:
+      summary: Obtener una campaña por ID
+      description: Este endpoint devuelve los detalles de una campaña específica.
+      operationId: getCampaignById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseCampaigns'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    put:
+      summary: Actualizar una campaña por ID
+      description: Este endpoint permite actualizar los detalles de una campaña específica.
+      operationId: updateCampaignById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCampaignRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseCampaigns'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    delete:
+      summary: Eliminar una campaña por ID
+      description: Este endpoint permite eliminar una campaña específica.
+      operationId: deleteCampaignById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+  /users:
+    post:
+      summary: Crear un usuario
+      description: Este endpoint permite crear un nuevo usuario en el sistema.
+      operationId: createUser
+      requestBody:
+        $ref: '#/components/requestBodies/CreateUserRequestBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedResponseUsers'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
+    get:
+      summary: Listar usuarios
+      description: Este endpoint devuelve una lista de todos los usuarios registrados.
+      operationId: listUsers
+      parameters:
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseUsersArray'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+  /users/{id}:
+    get:
+      summary: Obtener un usuario por ID
+      description: Este endpoint devuelve los detalles de un usuario específico.
+      operationId: getUserById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseUsers'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    put:
+      summary: Actualizar un usuario por ID
+      description: Este endpoint permite actualizar los detalles de un usuario específico.
+      operationId: updateUserById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateUserRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseUsers'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    delete:
+      summary: Eliminar un usuario por ID
+      description: Este endpoint permite eliminar un usuario específico.
+      operationId: deleteUserById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+  /loans:
+    post:
+      summary: Crear un préstamo
+      description: Este endpoint permite crear un nuevo préstamo en el sistema.
+      operationId: createLoan
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLoanRequestBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedResponseLoans'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
+    get:
+      summary: Listar préstamos
+      description: Este endpoint devuelve una lista de todos los préstamos registrados.
+      operationId: listLoans
+      parameters:
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLoansArray'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+  /loans/{id}:
+    get:
+      summary: Obtener un préstamo por ID
+      description: Este endpoint devuelve los detalles de un préstamo específico.
+      operationId: getLoanById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLoans'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    put:
+      summary: Actualizar un préstamo por ID
+      description: Este endpoint permite actualizar los detalles de un préstamo específico.
+      operationId: updateLoanById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLoanRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLoans'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    delete:
+      summary: Eliminar un préstamo por ID
+      description: Este endpoint permite eliminar un préstamo específico.
+      operationId: deleteLoanById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+  /leads:
+    post:
+      summary: Crear un lead
+      description: Este endpoint permite crear un nuevo lead en el sistema.
+      operationId: createLead
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeadRequestBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedResponseLeads'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
+    get:
+      summary: Listar leads
+      description: Este endpoint devuelve una lista de todos los leads registrados.
+      operationId: listLeads
+      parameters:
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeadsArray'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+  /leads/{id}:
+    get:
+      summary: Obtener un lead por ID
+      description: Este endpoint devuelve los detalles de un lead específico.
+      operationId: getLeadById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeads'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    put:
+      summary: Actualizar un lead por ID
+      description: Este endpoint permite actualizar los detalles de un lead específico.
+      operationId: updateLeadById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeadRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponseLeads'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    delete:
+      summary: Eliminar un lead por ID
+      description: Este endpoint permite eliminar un lead específico.
+      operationId: deleteLeadById
+      parameters:
+        - $ref: '#/components/parameters/IdParameter'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+  /ci-validator:
+    post:
+      summary: Validar CI
+      description: Este endpoint permite validar un CI en el sistema.
+      operationId: validateCI
+      requestBody:
+        $ref: '#/components/requestBodies/ValidateCIRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
+
+  /toPrezzta:
+    post:
+      summary: Enviar a Prezzta
+      description: Este endpoint permite enviar datos a Prezzta.
+      operationId: sendToPrezzta
+      requestBody:
+        $ref: '#/components/requestBodies/SendToPrezztaRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+  /mime-validator:
+    post:
+      summary: Validar MIME
+      description: Este endpoint permite validar un tipo MIME en el sistema.
+      operationId: validateMIME
+      requestBody:
+        $ref: '#/components/requestBodies/ValidateMIMERequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'

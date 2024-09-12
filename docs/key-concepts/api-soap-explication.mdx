@@ -1,0 +1,31 @@
+---
+title: Explicación de APIs REST y SOAP
+description: Características y aplicaciones de las APIs.
+tags:
+  - Conceptos Clave
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+En Mozart Fintech, ofrecemos dos tipos de APIs para conectar nuestros servicios financieros con sus sistemas: REST y SOAP. Ambas tienen sus propias ventajas y casos de uso específicos.
+
+<Tabs
+  defaultValue="rest"
+  values={[
+    { label: 'API REST', value: 'rest' },
+    { label: 'API SOAP', value: 'soap' },
+  ]}>
+  <TabItem value="rest">
+
+La **API REST** (Representational State Transfer) es un estilo arquitectónico que utiliza métodos HTTP estándar y se centra en la comunicación sin estado. Es ideal para operaciones web donde se requiere escalabilidad y rendimiento.
+
+  </TabItem>
+  <TabItem value="soap">
+
+La **API SOAP** (Simple Object Access Protocol) es un protocolo que permite la comunicación entre aplicaciones a través de solicitudes y respuestas HTTP, con un enfoque en la seguridad y la transacción de mensajes estructurados.
+
+  </TabItem>
+</Tabs>
+
+Cada API tiene su propio conjunto de prácticas y estándares que garantizan una integración segura y eficiente con nuestros servicios.

@@ -1,0 +1,122 @@
+---
+title: Ejemplos de código y casos de uso
+description: Ejemplos prácticos de código para facilitar la implementación.
+tags:
+  - Guía de Integración
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+En esta sección, proporcionamos ejemplos de código para casos de uso comunes, como la creación de un lead en nuestro sistema financiero a través de nuestras APIs REST.
+
+<Tabs
+  defaultValue="rest"
+  values={[
+    { label: 'Ejemplos API REST', value: 'rest' },
+    { label: 'Ejemplos API SOAP', value: 'soap' },
+  ]}>
+  <TabItem value="rest">
+
+### Caso de Uso: Crear Lead
+Para crear un nuevo lead, envíe una solicitud POST con la información del prospecto.
+
+<CodeBlock language="javascript">
+{`fetch('https://api.mozartfintech.com/leads', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    firstName: 'Juan',
+    lastName: 'Pérez',
+    email: 'juan.perez@example.com',
+    phone: '+5981234567',
+    company: 'Ejemplo S.A.',
+    position: 'Gerente de Finanzas',
+    campaignId: '123',
+    userId: '456',
+    status: 'Nuevo',
+    statusBot: 'Pendiente',
+    amount: '10000',
+    finalAmount: '9500',
+    quotas: '12',
+    quotasAmount: '792',
+    clearing: true,
+    documentPhoto: 'doc_photo.jpg',
+    documentBackPhoto: 'doc_back_photo.jpg',
+    frontPhoto: 'front_photo.jpg',
+    invoicePhoto: 'invoice_photo.jpg',
+    creditStatePhotos: ['credit_photo1.jpg', 'credit_photo2.jpg'],
+    howFind: 'Internet',
+    reason: 'Inversión',
+    reasonRejected: 'N/A',
+    comment: 'Cliente potencial para seguimiento',
+    waiting: 'No',
+    creditType: 'Personal'
+  })
+})
+.then(response => response.json())
+.then(data => console.log('Lead creado:', data))
+.catch(error => console.error('Error:', error));`}
+</CodeBlock>
+
+Este ejemplo muestra cómo puede integrar la creación de leads en su flujo de trabajo utilizando nuestra API REST. Asegúrese de reemplazar `YOUR_ACCESS_TOKEN` con el token de acceso proporcionado por Mozart Fintech.
+
+</TabItem>
+<TabItem value="soap">
+
+### Caso de Uso: Crear Lead
+Para crear un nuevo lead mediante SOAP, construya y envíe un mensaje SOAP al servicio correspondiente.
+
+<CodeBlock language="xml">
+{`<s:Envelope xmlns:s="https://schemas.xmlsoap.org/soap/envelope/">
+  <s:Header>
+    <h:Auth xmlns:h="https://soap.mozartfintech.com/auth">
+      <Token>YOUR_ACCESS_TOKEN</Token>
+    </h:Auth>
+  </s:Header>
+  <s:Body>
+    <CreateLeadRequest xmlns="https://soap.mozartfintech.com/leads">
+      <LeadData>
+        <FirstName>Juan</FirstName>
+        <LastName>Pérez</LastName>
+        <Email>juan.perez@example.com</Email>
+        <Phone>+5981234567</Phone>
+        <Company>Ejemplo S.A.</Company>
+        <Position>Gerente de Finanzas</Position>
+        <CampaignId>123</CampaignId>
+        <UserId>456</UserId>
+        <Status>Nuevo</Status>
+        <StatusBot>Pendiente</StatusBot>
+        <Amount>10000</Amount>
+        <FinalAmount>9500</FinalAmount>
+        <Quotas>12</Quotas>
+        <QuotasAmount>792</QuotasAmount>
+        <Clearing>true</Clearing>
+        <DocumentPhoto>doc_photo.jpg</DocumentPhoto>
+        <DocumentBackPhoto>doc_back_photo.jpg</DocumentBackPhoto>
+        <FrontPhoto>front_photo.jpg</FrontPhoto>
+        <InvoicePhoto>invoice_photo.jpg</InvoicePhoto>
+        <CreditStatePhotos>
+          <Photo>credit_photo1.jpg</Photo>
+          <Photo>credit_photo2.jpg</Photo>
+        </CreditStatePhotos>
+        <HowFind>Internet</HowFind>
+        <Reason>Inversión</Reason>
+        <ReasonRejected>N/A</ReasonRejected>
+        <Comment>Cliente potencial para seguimiento</Comment>
+        <Waiting>No</Waiting>
+        <CreditType>Personal</CreditType>
+      </LeadData>
+    </CreateLeadRequest>
+  </s:Body>
+</s:Envelope>`}
+</CodeBlock>
+
+Este ejemplo muestra cómo enviar una solicitud SOAP para crear un lead en el sistema de Mozart Fintech. Recuerde reemplazar `YOUR_ACCESS_TOKEN` con el token de acceso que le proporcionamos.
+
+</TabItem>
+</Tabs>
